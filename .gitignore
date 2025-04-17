@@ -1,9 +1,9 @@
 # OSX
-#
+# macOS 운영체제에서 생성되는 파일
 .DS_Store
 
 # Xcode
-#
+# Xcode IDE 관련 파일
 build/
 *.pbxuser
 !default.pbxuser
@@ -23,7 +23,7 @@ DerivedData
 **/.xcode.env.local
 
 # Android/IntelliJ
-#
+# 안드로이드 및 IntelliJ IDE 관련 파일
 build/
 .idea
 .gradle
@@ -36,17 +36,16 @@ local.properties
 .kotlin/
 
 # node.js
-#
+# Node.js 관련 파일
 node_modules/
 npm-debug.log
 yarn-debug.log
 yarn-error.log
 
 # fastlane
-#
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
-# For more information about the recommended setup visit:
+# 앱 배포 자동화 도구인 fastlane 관련 파일
+# 스크린샷은 git 저장소에 저장하지 않고, fastlane을 사용하여 필요할 때마다 재생성하는 것이 좋습니다.
+# 추천 설정에 대한 자세한 정보는 다음 링크를 참조하세요:
 # https://docs.fastlane.tools/best-practices/source-control/
 
 **/fastlane/report.xml
@@ -55,19 +54,24 @@ yarn-error.log
 **/fastlane/test_output
 
 # Bundle artifact
+# React Native 번들 파일
 *.jsbundle
 
 # Ruby / CocoaPods
+# iOS 종속성 관리 도구 관련 파일
 **/Pods/
 /vendor/bundle/
 
 # Temporary files created by Metro to check the health of the file watcher
+# Metro 번들러의 파일 감시 상태 확인용 임시 파일
 .metro-health-check*
 
 # testing
+# 테스트 커버리지 관련 파일
 /coverage
 
 # Yarn
+# Yarn 패키지 매니저 관련 파일 (Zero-installs 설정)
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -76,28 +80,35 @@ yarn-error.log
 !.yarn/versions
 
 # 환경 변수 파일
+# 민감한 정보를 포함할 수 있는 환경 설정 파일
 *.env*
 
 # ESLint 캐시
+# 코드 린터 캐시 파일
 .eslintcache
 
 # iOS 특정 파일
+# iOS 플랫폼 특정 파일들
 ios/Podfile.lock
 *.dSYM.zip
 *.dSYM
 
 # Android 추가 제외 항목
+# 안드로이드 플랫폼 특정 파일 및 디렉토리
 android/app/release/
 android/app/src/main/assets/index.android.bundle
 android/app/src/main/res/drawable-*
 android/app/src/main/res/raw/
 
 # VSCode 설정
+# Visual Studio Code IDE 설정 파일
 .vscode/
 
 # Watchman 설정
+# 파일 시스템 모니터링 도구 설정
 .watchmanconfig
 
 # Code coverage
+# 코드 테스트 커버리지 관련 파일
 coverage/
 jest-coverage/
