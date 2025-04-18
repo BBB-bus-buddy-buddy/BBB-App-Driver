@@ -89,7 +89,7 @@ yarn-error.log
 
 # iOS 특정 파일
 # iOS 플랫폼 특정 파일들
-ios/Podfile.lock
+Podfile.lock
 *.dSYM.zip
 *.dSYM
 
