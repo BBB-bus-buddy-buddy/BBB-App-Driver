@@ -112,3 +112,7 @@ android/app/src/main/res/raw/
 # 코드 테스트 커버리지 관련 파일
 coverage/
 jest-coverage/
+
+# Client ID docs
+client_*.plist
+client_secret_*.json
