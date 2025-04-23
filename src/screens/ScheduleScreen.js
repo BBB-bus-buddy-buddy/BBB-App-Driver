@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, FONT_SIZE, FONT_WEIGHT, BORDER_RADIUS, SHADOWS, SPACING } from '../constants/theme';
-import { getDriveSchedules } from '../utils/api';
 import BottomTabBar from '../components/BottomTabBar';
 import { Calendar } from 'react-native-calendars';
 

@@ -13,9 +13,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, FONT_SIZE, FONT_WEIGHT, BORDER_RADIUS, SHADOWS, SPACING } from '../constants/theme';
-import { getDriveSchedules, getWeatherInfo, getNotifications } from '../utils/api';
 import { isTimeNearby } from '../utils/dateUtils';
-import useAuth from '../hook/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DriveStatusCard from '../components/DriveStatusCard';
 import NotificationItem from '../components/NotificationItem';

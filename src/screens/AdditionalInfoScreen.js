@@ -19,7 +19,6 @@ import {
   BORDER_RADIUS,
   SPACING,
 } from '../constants/theme';
-import useAuth from '../hook/useAuth';
 
 const AdditionalInfoScreen = ({navigation}) => {
   const {saveUserAdditionalInfo} = useAuth();

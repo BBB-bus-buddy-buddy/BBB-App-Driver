@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, FONT_SIZE, FONT_WEIGHT, BORDER_RADIUS, SHADOWS, SPACING } from '../constants/theme';
-import useAuth from '../hook/useAuth';
 
 const SignUpScreen = ({ navigation }) => {
   const { signUp } = useAuth();

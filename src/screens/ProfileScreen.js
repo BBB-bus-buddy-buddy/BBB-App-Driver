@@ -12,7 +12,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, FONT_SIZE, FONT_WEIGHT, BORDER_RADIUS, SHADOWS, SPACING } from '../constants/theme';
 import BottomTabBar from '../components/BottomTabBar';
-import useAuth from '../hook/useAuth';
 
 const ProfileScreen = ({ navigation }) => {
   const { userInfo, logout } = useAuth();
