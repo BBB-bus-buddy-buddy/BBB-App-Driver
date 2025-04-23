@@ -12,6 +12,7 @@
     "clean-build-android": "npm run clean-android && npm run android",
 
     "ios": "react-native run-ios",
+    "ios-16p": "react-native run-ios --simulator=\"iPhone 16 Plus\"",
     "pod-install": "cd ios && pod install && cd ..",
     "clean-ios": "cd ios && (rm -rf build/ || true) && xcodebuild clean && cd ..",
     "clean-build-ios": "npm run clean-ios && npm run pod-install && npm run ios",
