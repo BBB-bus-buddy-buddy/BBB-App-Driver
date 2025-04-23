@@ -24,7 +24,6 @@ DerivedData
 
 # Android/IntelliJ
 # 안드로이드 및 IntelliJ IDE 관련 파일
-build/
 .idea
 .gradle
 local.properties
@@ -44,10 +43,6 @@ yarn-error.log
 
 # fastlane
 # 앱 배포 자동화 도구인 fastlane 관련 파일
-# 스크린샷은 git 저장소에 저장하지 않고, fastlane을 사용하여 필요할 때마다 재생성하는 것이 좋습니다.
-# 추천 설정에 대한 자세한 정보는 다음 링크를 참조하세요:
-# https://docs.fastlane.tools/best-practices/source-control/
-
 **/fastlane/report.xml
 **/fastlane/Preview.html
 **/fastlane/screenshots
@@ -60,7 +55,7 @@ yarn-error.log
 # Ruby / CocoaPods
 # iOS 종속성 관리 도구 관련 파일
 **/Pods/
-/vendor/bundle/
+vendor/bundle/
 
 # Temporary files created by Metro to check the health of the file watcher
 # Metro 번들러의 파일 감시 상태 확인용 임시 파일
@@ -89,7 +84,6 @@ yarn-error.log
 
 # iOS 특정 파일
 # iOS 플랫폼 특정 파일들
-Podfile.lock
 *.dSYM.zip
 *.dSYM
 
@@ -110,9 +104,21 @@ android/app/src/main/res/raw/
 
 # Code coverage
 # 코드 테스트 커버리지 관련 파일
-coverage/
 jest-coverage/
 
 # Client ID docs
 client_*.plist
 client_secret_*.json
+
+# set-up files
+ios/Podfile.lock
+package-lock.json
+
+# rel build
+android/app/build/
+ios/build/
+
+# iOS
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/
+*.xcuserstate
