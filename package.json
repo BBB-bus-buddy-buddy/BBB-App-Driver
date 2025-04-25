@@ -15,7 +15,7 @@
     "ios-16p": "react-native run-ios --simulator=\"iPhone 16 Plus\"",
     "pod-install": "cd ios && pod install && cd ..",
     "clean-ios": "cd ios && (rm -rf build/ || true) && xcodebuild clean && npm run pod-install && cd ..",
-    "clean-build-ios": "npm run clean-ios && npm run pod-install && npm run ios",
+    "clean-build-ios": "npm run clean-ios && npm run ios",
 
     "lint": "eslint .",
     "start": "react-native start",
