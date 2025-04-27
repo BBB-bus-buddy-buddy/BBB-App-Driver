@@ -1,6 +1,6 @@
 // src/navigation/AppNavigator.js
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from '../screens/SplashScreen';
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
@@ -12,13 +12,18 @@ import EndDriveScreen from '../screens/EndDriveScreen';
 import ScheduleScreen from '../screens/ScheduleScreen';
 import MessageScreen from '../screens/MessageScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import {useUser} from '../context/UserContext';
 
 // 스택 네비게이터 생성
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
+  const {isLoggedIn} = useUser();
+
   return (
-    <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName={isLoggedIn ? 'Home' : 'Splash'}
+      screenOptions={{headerShown: false}}>
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="SignUp" component={SignUpScreen} />
