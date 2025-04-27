@@ -1,5 +1,5 @@
 // src/screens/LoginScreen.js
-import React, {useEffect, useState} from 'react';
+import React, {use, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -24,10 +24,11 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import {useUser} from '../context/UserContext';
 
 const LoginScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  const {userInfo, setUserInfo} = useUser();
 
   // 서버 URL 설정
   const BASE_URL = 'http://10.37.129.2:8088';
@@ -61,25 +62,30 @@ const LoginScreen = ({navigation}) => {
       await GoogleSignin.signOut();
 
       // Google 로그인 실행
-      const userInfo = await GoogleSignin.signIn();
-      console.log('Google 로그인 성공:', userInfo);
+      const res = await GoogleSignin.signIn();
+      if (res.type == 'success') { // 요청이 성공적이라면
 
-      // 백엔드 통신 없이 모의 토큰 생성
-      const mockToken = 'test_token_' + Date.now();
-      await AsyncStorage.setItem('token', mockToken);
+        // 백엔드 통신 없이 모의 토큰 생성
+        const mockToken = 'test_token_' + Date.now();
+        await AsyncStorage.setItem('token', mockToken);
 
-      // 사용자 정보 저장
-      const mockUserInfo = {
-        id: userInfo.user.id,
-        name: userInfo.user.name,
-        email: userInfo.user.email,
-        role: 'DRIVER',
-      };
-      await AsyncStorage.setItem('userInfo', JSON.stringify(mockUserInfo));
+        // 사용자 정보 저장
+        const mockUserInfo = {
+          id: '213c4',
+          name: res.data.name,
+          email: res.data.email,
+          organizationId: 'Uasidnw',
+          role: 'DRIVER',
+        };
+        setUserInfo(mockUserInfo);
 
-      // 홈 화면으로 이동
-      Alert.alert('로그인 성공', `${userInfo.user.name}님, 환영합니다!`);
-      navigation.replace('Home');
+        console.log(`사용자 정보 ${JSON.stringify(mockUserInfo)}`);
+
+        await AsyncStorage.setItem('userInfo', JSON.stringify(mockUserInfo)); // 사용자 정보를 context에 저장하는데 이게 필요한가? 필요하다면 어디에 쓰이는가?
+
+        // 홈 화면으로 이동
+        navigation.replace('Home');
+      }
     } catch (error) {
       console.error('Google 로그인 오류:', error);
 

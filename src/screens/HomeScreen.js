@@ -18,10 +18,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DriveStatusCard from '../components/DriveStatusCard';
 import NotificationItem from '../components/NotificationItem';
 import BottomTabBar from '../components/BottomTabBar';
+import { useUser } from '../context/UserContext';
 
 const HomeScreen = ({ navigation }) => {
-  const { userInfo } = useAuth();
-  const [userName, setUserName] = useState('운전자');
+  const { userInfo } = useUser();
+  const [userName, setUserName] = useState('');
   const [driveSchedules, setDriveSchedules] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
@@ -30,11 +31,14 @@ const HomeScreen = ({ navigation }) => {
   const [unreadNotifications, setUnreadNotifications] = useState(0);
   const [activeBottomTab, setActiveBottomTab] = useState('home');
   const [notificationModalVisible, setNotificationModalVisible] = useState(false);
+  const { drive} = 
 
   useEffect(() => {
     // 사용자 정보 로드
     if (userInfo && userInfo.name) {
       setUserName(userInfo.name);
+      console.log(`Context에 저장된 사용자 정보: ${JSON.stringify(userInfo)}`);
+      console.log(`현재 컴포넌트의 State에 저장된 사용자 이름: ${userName}`);
     }
 
     // 데이터 로드
