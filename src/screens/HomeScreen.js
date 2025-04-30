@@ -1,5 +1,5 @@
 // src/screens/HomeScreen.js
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -11,27 +11,37 @@ import {
   Alert,
   Modal,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { COLORS, FONT_SIZE, FONT_WEIGHT, BORDER_RADIUS, SHADOWS, SPACING } from '../constants/theme';
-import { isTimeNearby } from '../utils/dateUtils';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {
+  COLORS,
+  FONT_SIZE,
+  FONT_WEIGHT,
+  BORDER_RADIUS,
+  SHADOWS,
+  SPACING,
+} from '../constants/theme';
+import {isTimeNearby} from '../utils/dateUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DriveStatusCard from '../components/DriveStatusCard';
 import NotificationItem from '../components/NotificationItem';
 import BottomTabBar from '../components/BottomTabBar';
-import { useUser } from '../context/UserContext';
+import {useUser} from '../context/UserContext';
 
-const HomeScreen = ({ navigation }) => {
-  const { userInfo } = useUser();
+const HomeScreen = ({navigation}) => {
+  const {userInfo} = useUser();
   const [userName, setUserName] = useState('');
   const [driveSchedules, setDriveSchedules] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
-  const [weather, setWeather] = useState({ temp: '23°C', condition: '맑음' });
+  const [weather, setWeather] = useState({temp: '23°C', condition: '맑음'});
   const [notifications, setNotifications] = useState([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
   const [activeBottomTab, setActiveBottomTab] = useState('home');
-  const [notificationModalVisible, setNotificationModalVisible] = useState(false);
-  const { drive} = 
+  const [notificationModalVisible, setNotificationModalVisible] =
+    useState(false);
+
+  // 이 부분 삭제
+  // const { drive} =
 
   useEffect(() => {
     // 사용자 정보 로드
@@ -49,29 +59,67 @@ const HomeScreen = ({ navigation }) => {
     try {
       // 운행 일정 로드
       const schedules = await getDriveSchedules();
-      
+
       // 버튼 활성화 여부 계산
       const schedulesWithButtonStatus = schedules.map(schedule => ({
         ...schedule,
         isButtonActive: isTimeNearby(schedule.departureTime),
       }));
-      
+
       setDriveSchedules(schedulesWithButtonStatus);
-      
+
       // 날씨 정보 로드
       const weatherInfo = await getWeatherInfo();
       setWeather(weatherInfo);
-      
+
       // 알림 로드
       const notifs = await getNotifications();
       setNotifications(notifs);
-      
+
       // 읽지 않은 알림 개수 계산
-      const unreadCount = notifs.filter(notification => notification.unread).length;
+      const unreadCount = notifs.filter(
+        notification => notification.unread,
+      ).length;
       setUnreadNotifications(unreadCount);
     } catch (error) {
       console.error('Error loading data:', error);
     }
+  };
+
+  // 여기에 드라이브 스케줄, 날씨 정보, 알림을 가져오는 함수들을 추가해야 합니다
+  const getDriveSchedules = async () => {
+    // 임시 데이터
+    return [
+      {
+        id: '1',
+        routeName: '동부 -> 서부',
+        departureTime: '14:00',
+        arrivalTime: '16:00',
+        startLocation: '울산과학대학교 동부캠퍼스',
+        endLocation: '울산과학대학교 서부캠퍼스',
+        totalStops: 5,
+        currentStop: 0,
+        status: 'scheduled',
+      },
+    ];
+  };
+
+  const getWeatherInfo = async () => {
+    // 임시 데이터
+    return {temp: '23°C', condition: '맑음'};
+  };
+
+  const getNotifications = async () => {
+    // 임시 데이터
+    return [
+      {
+        id: '1',
+        title: '운행 알림',
+        message: '내일 운행 일정이 추가되었습니다.',
+        time: '오전 10:30',
+        unread: true,
+      },
+    ];
   };
 
   const onRefresh = async () => {
@@ -80,21 +128,21 @@ const HomeScreen = ({ navigation }) => {
     setRefreshing(false);
   };
 
-  const handleStartDrive = (driveId) => {
+  const handleStartDrive = driveId => {
     // 선택된 운행 정보 찾기
     const selectedDrive = driveSchedules.find(drive => drive.id === driveId);
-    
+
     if (selectedDrive) {
       // 운행 정보를 로컬 스토리지에 저장
       AsyncStorage.setItem('currentDrive', JSON.stringify(selectedDrive));
       // 운행 시작 화면으로 이동
-      navigation.navigate('StartDrive', { drive: selectedDrive });
+      navigation.navigate('StartDrive', {drive: selectedDrive});
     } else {
       Alert.alert('오류', '운행 정보를 찾을 수 없습니다.');
     }
   };
 
-  const renderDriveItem = (drive) => (
+  const renderDriveItem = drive => (
     <DriveStatusCard
       key={drive.id}
       drive={drive}
@@ -102,10 +150,10 @@ const HomeScreen = ({ navigation }) => {
       isActive={drive.isButtonActive}
     />
   );
-  
-  const handleBottomTabPress = (tabId) => {
+
+  const handleBottomTabPress = tabId => {
     setActiveBottomTab(tabId);
-    
+
     switch (tabId) {
       case 'home':
         // 이미 홈 화면이므로 아무 작업도 하지 않음
@@ -126,7 +174,7 @@ const HomeScreen = ({ navigation }) => {
 
   const toggleNotificationModal = () => {
     setNotificationModalVisible(!notificationModalVisible);
-    
+
     // 모달이 열릴 때 알림을 읽음 처리
     if (!notificationModalVisible) {
       markNotificationsAsRead();
@@ -137,12 +185,12 @@ const HomeScreen = ({ navigation }) => {
     // 읽지 않은 알림을 모두 읽음 처리
     const updatedNotifications = notifications.map(notification => ({
       ...notification,
-      unread: false
+      unread: false,
     }));
-    
+
     setNotifications(updatedNotifications);
     setUnreadNotifications(0);
-    
+
     // 실제 앱에서는 서버에 읽음 상태 업데이트 요청을 보내야 함
   };
 
@@ -154,19 +202,20 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.welcomeText}>안녕하세요,</Text>
             <Text style={styles.userName}>{userName}님!</Text>
           </View>
-          
+
           {/* 알림 아이콘 */}
-          <TouchableOpacity 
-            style={styles.notificationButton} 
-            onPress={toggleNotificationModal}
-          >
+          <TouchableOpacity
+            style={styles.notificationButton}
+            onPress={toggleNotificationModal}>
             <Image
               source={require('../assets/notification-icon.png')}
               style={styles.notificationIcon}
             />
             {unreadNotifications > 0 && (
               <View style={styles.notificationBadge}>
-                <Text style={styles.notificationBadgeText}>{unreadNotifications}</Text>
+                <Text style={styles.notificationBadgeText}>
+                  {unreadNotifications}
+                </Text>
               </View>
             )}
           </TouchableOpacity>
@@ -176,8 +225,7 @@ const HomeScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
+          }>
           {/* 날씨 섹션 */}
           <View style={styles.weatherSection}>
             <View style={styles.weatherCard}>
@@ -189,7 +237,9 @@ const HomeScreen = ({ navigation }) => {
                 />
                 <View>
                   <Text style={styles.temperature}>{weather.temp}</Text>
-                  <Text style={styles.weatherCondition}>{weather.condition}</Text>
+                  <Text style={styles.weatherCondition}>
+                    {weather.condition}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -198,7 +248,7 @@ const HomeScreen = ({ navigation }) => {
           {/* 운행 정보 섹션 */}
           <View style={styles.driveSection}>
             <Text style={styles.sectionTitle}>금일 운행 정보</Text>
-            
+
             {/* 운행 탭 */}
             {driveSchedules.length > 0 && (
               <View style={styles.driveTabs}>
@@ -209,27 +259,27 @@ const HomeScreen = ({ navigation }) => {
                       styles.driveTab,
                       activeTab === index && styles.activeTab,
                     ]}
-                    onPress={() => setActiveTab(index)}
-                  >
+                    onPress={() => setActiveTab(index)}>
                     <Text
                       style={[
                         styles.driveTabText,
                         activeTab === index && styles.activeTabText,
-                      ]}
-                    >
+                      ]}>
                       운행 {drive.id}
                     </Text>
                   </TouchableOpacity>
                 ))}
               </View>
             )}
-            
+
             {/* 현재 선택된 운행 정보 */}
             {driveSchedules.length > 0 ? (
               renderDriveItem(driveSchedules[activeTab])
             ) : (
               <View style={styles.noDriveContainer}>
-                <Text style={styles.noDriveText}>오늘은 예정된 운행이 없습니다.</Text>
+                <Text style={styles.noDriveText}>
+                  오늘은 예정된 운행이 없습니다.
+                </Text>
               </View>
             )}
           </View>
@@ -244,30 +294,28 @@ const HomeScreen = ({ navigation }) => {
               </Text>
             </View>
           </View>
-          
+
           {/* 하단 여백 */}
           <View style={styles.bottomPadding} />
         </ScrollView>
-        
+
         {/* 알림 모달 */}
         <Modal
           visible={notificationModalVisible}
           transparent={true}
           animationType="slide"
-          onRequestClose={toggleNotificationModal}
-        >
+          onRequestClose={toggleNotificationModal}>
           <View style={styles.modalOverlay}>
             <View style={styles.modalContainer}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalTitle}>알림</Text>
-                <TouchableOpacity 
-                  style={styles.closeButton} 
-                  onPress={toggleNotificationModal}
-                >
+                <TouchableOpacity
+                  style={styles.closeButton}
+                  onPress={toggleNotificationModal}>
                   <Text style={styles.closeButtonText}>닫기</Text>
                 </TouchableOpacity>
               </View>
-              
+
               <ScrollView style={styles.modalContent}>
                 {notifications.length > 0 ? (
                   notifications.map(notification => (
@@ -287,7 +335,7 @@ const HomeScreen = ({ navigation }) => {
             </View>
           </View>
         </Modal>
-        
+
         {/* 하단 탭 바 */}
         <BottomTabBar
           activeTab={activeBottomTab}
@@ -458,7 +506,7 @@ const styles = StyleSheet.create({
   bottomPadding: {
     height: 70, // 바텀 탭 바 높이 + 여백
   },
-  
+
   // 알림 모달 스타일
   modalOverlay: {
     flex: 1,

@@ -12,9 +12,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, FONT_SIZE, FONT_WEIGHT, BORDER_RADIUS, SHADOWS, SPACING } from '../constants/theme';
 import BottomTabBar from '../components/BottomTabBar';
+import { useAuth } from '../context/AuthContext'; // 추가된 import
 
 const ProfileScreen = ({ navigation }) => {
-  const { userInfo, logout } = useAuth();
+  const { userInfo, logout } = useAuth(); // useAuth 훅 사용
   const [activeBottomTab, setActiveBottomTab] = useState('profile');
   const [drivingStats, setDrivingStats] = useState({
     totalDrives: 42,
@@ -58,12 +59,8 @@ const ProfileScreen = ({ navigation }) => {
           text: '로그아웃',
           onPress: async () => {
             try {
-              const success = await logout();
-              if (success) {
-                navigation.replace('Login');
-              } else {
-                Alert.alert('오류', '로그아웃 중 문제가 발생했습니다.');
-              }
+              await logout(); // 수정된 부분: 반환값 체크 없이 프로미스 완료 대기
+              navigation.replace('Login');
             } catch (error) {
               Alert.alert('오류', '로그아웃 중 문제가 발생했습니다.');
             }
